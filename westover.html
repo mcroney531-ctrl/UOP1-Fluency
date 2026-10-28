@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Westover Framework</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+
+  :root {
+    --navy: #0f1e35;
+    --navy-mid: #1a2f4a;
+    --accent: #3AABDB;
+    --accent-dim: rgba(58, 171, 219, 0.15);
+    --gold: #e8b84b;
+    --text: #eef2f7;
+    --text-dim: #8da0b8;
+    --card-bg: rgba(255,255,255,0.04);
+    --border: rgba(58,171,219,0.2);
+  }
+
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+  }
+
+
+  .container {
+    max-width: 860px;
+    width: 100%;
+  }
+
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+
+  .source-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+
+  /* Outcome bar */
+  .outcome-bar {
+    background: var(--accent-dim);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+
+  .outcome-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+
+  .outcome-stat .big {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+
+  .outcome-stat .label {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.4;
+    max-width: 140px;
+  }
+
+
+  .vs-divider {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    padding: 0 8px;
+    flex-shrink: 0;
+  }
+
+
+  .outcome-stat .big.low {
+    color: rgba(255,255,255,0.25);
+  }
+
+
+  .outcome-note {
+    margin-left: auto;
+    font-size: 11px;
+    color: rgba(232,184,75,0.75);
+    font-style: italic;
+    border-left: 2px solid rgba(232,184,75,0.4);
+    padding-left: 16px;
+    max-width: 200px;
+    line-height: 1.5;
+  }
+
+
+  .outcome-context {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    border-left: 2px solid rgba(232,184,75,0.4);
+    padding-left: 16px;
+    margin-left: auto;
+  }
+
+
+  .context-stat {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    color: var(--gold);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+
+  .context-label {
+    font-size: 11.5px;
+    color: rgba(232,184,75,0.75);
+    line-height: 1.5;
+    max-width: 180px;
+  }
+
+
+  .context-label em {
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+
+  /* Dimension cards */
+  .dimensions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+
+  .card:hover {
+    border-color: rgba(58,171,219,0.5);
+  }
+
+
+  .card-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px;
+    color: rgba(58,171,219,0.12);
+    line-height: 1;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-style: italic;
+  }
+
+
+  .card-icon {
+    font-size: 22px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+
+  .card-desc {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+
+  .card-stat {
+    background: var(--accent-dim);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 11.5px;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+
+  .card-stat strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 1px;
+  }
+
+
+  /* L&D relevance callout */
+  .relevance {
+    background: rgba(232, 184, 75, 0.06);
+    border: 1px solid rgba(232,184,75,0.25);
+    border-radius: 6px;
+    padding: 18px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+
+  .relevance-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+
+  .relevance-text {
+    font-size: 13px;
+    color: rgba(232,184,75,0.9);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+
+  .relevance-text strong {
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+
+  /* Footer cite */
+  .cite {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.05em;
+  }
+
+
+  @media (max-width: 640px) {
+    .dimensions { grid-template-columns: 1fr; }
+    .outcome-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .outcome-note { margin-left: 0; border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 12px; }
+  }
+a:focus-visible { outline: 3px solid #e8b84b; outline-offset: 3px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+
+  <div class="header">
+    <div class="source-tag">Westover · Sustainability · 2025 · n=127 orgs</div>
+    <h1>Three Dimensions of<br><em>Sustainable AI Transformation</em></h1>
+    <p class="subtitle">What separates organizations that actually succeed from those that just deploy</p>
+  </div>
+
+
+  <div class="outcome-bar">
+    <div class="outcome-stat">
+      <span class="big">74%</span>
+      <span class="label">success rate — all three dimensions</span>
+    </div>
+    <div class="vs-divider">vs</div>
+    <div class="outcome-stat">
+      <span class="big low">12%</span>
+      <span class="label">success rate — none of the three</span>
+    </div>
+    <div class="outcome-note">Gap of 62 percentage points. Technology investment alone doesn't explain the difference.</div>
+    <div class="outcome-context">
+      <span class="context-stat">70%</span>
+      <span class="context-label">a figure often claimed for organizational change initiatives, not AI implementations specifically<br><em>— Burnes &amp; Jackson, 2011</em></span>
+    </div>
+  </div>
+
+
+  <div class="dimensions">
+
+
+    <div class="card">
+      <span class="card-num">1</span>
+      <span class="card-icon">🧠</span>
+      <div class="card-title">Comprehensive Upskilling</div>
+      <p class="card-desc">Not training completion — <strong style="color: var(--text);">behavioral change</strong>. The focus is on how people actually work differently, not whether they finished a module.</p>
+      <div class="card-stat">
+        <strong>2.7×</strong>
+        higher implementation success
+      </div>
+    </div>
+
+
+    <div class="card">
+      <span class="card-num">2</span>
+      <span class="card-icon">🔁</span>
+      <div class="card-title">Distributed Innovation</div>
+      <p class="card-desc">Cross-functional <strong style="color: var(--text);">ideation</strong>, not top-down rollout. People closest to the work identify where AI actually fits — not central IT.</p>
+      <div class="card-stat">
+        <strong>3.1×</strong>
+        more identified use cases
+      </div>
+    </div>
+
+
+    <div class="card">
+      <span class="card-num">3</span>
+      <span class="card-icon">⚙️</span>
+      <div class="card-title">Strategic Integration</div>
+      <p class="card-desc">AI systems aligned across departments, not siloed by team. Governance structure that connects adoption to actual organizational goals.</p>
+      <div class="card-stat">
+        <strong>31%</strong>
+        of implementation variance explained
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <div class="relevance">
+    <span class="relevance-icon">💡</span>
+    <p class="relevance-text"><strong>Why this matters for L&D:</strong> Dimension 1 is squarely in our lane — and it's the one that produces the largest multiplier effect. The study frames "comprehensive upskilling" explicitly as behavioral change, not seat time or completion rates. That's the argument: L&D's value isn't in building the course. It's in closing the gap between knowing and doing.</p>
+  </div>
+
+
+  <p class="cite"><a href="https://doi.org/10.3390/su17219822" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:underline;">Westover, J.H. (2025). Sustainable AI Transformation. Sustainability, 17, 9822.</a> Mixed methods: 127 organizations, 14 case studies.</p>
+
+
+</div>
+</body>
+</html>
